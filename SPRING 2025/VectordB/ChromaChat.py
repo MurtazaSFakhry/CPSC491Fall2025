@@ -1,9 +1,11 @@
 import json
 import openai
 from chromadb import PersistentClient
+import sys
+from config import get_api_key
 
 # === CONFIG ===
-openai.api_key = "OPENAI_API_KEY"  # Replace with your OpenAI API key
+openai.api_key = get_api_key() # fetch api key from env
 persist_path = "./chroma_fcc_storage"
 collection_name = "fcc_documents"
 retrieval_limit = 5  # how many top results to use for context

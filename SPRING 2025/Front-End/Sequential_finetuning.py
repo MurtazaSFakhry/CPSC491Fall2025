@@ -3,13 +3,15 @@ import time
 import json
 from openai import OpenAI
 from dotenv import load_dotenv
+from config import get_api_key
 
 # Load environment variables
 load_dotenv()
 import os
 from openai import OpenAI
 
-client = OpenAI(api="OPENAI_AI_KEY")  # Replace with your actual API key
+openai.api_key = get_api_key() # fetch api key from env
+client = OpenAI(api=openai.api_key) 
 
 print("API Key Loaded Successfully!")
 

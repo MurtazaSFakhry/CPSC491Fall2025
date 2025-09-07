@@ -6,9 +6,11 @@ from PyPDF2 import PdfReader
 from openai import OpenAI
 import chromadb
 from chromadb.config import Settings
+from config import get_api_key
 
 
-client = OpenAI(api_key="OPENAI_API_KEY")
+openai.api_key = get_api_key() # fetch api key from env
+client = OpenAI(api_key=openai.api_key)
 
 # === Constants ===
 PDF_FOLDER = "pdfs"
