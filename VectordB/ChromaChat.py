@@ -1,7 +1,6 @@
 import json
 import openai
 from chromadb import PersistentClient
-import sys
 from config import get_api_key
 
 # === CONFIG ===
