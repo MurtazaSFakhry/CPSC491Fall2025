@@ -1,4 +1,5 @@
 openai
+openai==0.28.0
 python-dotenv
 chromadb
 pinecone>=3.0.0
