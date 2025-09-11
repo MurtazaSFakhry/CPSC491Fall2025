@@ -1,9 +1,8 @@
 #This script will scrape all pdf documents in /pdf-docs and save each one to a text file with the same name in /text-files. 
 
 import os
-import requests
 from PyPDF2 import PdfReader
-import io
+
 
 pdf_folder = 'pdf-docs'
 text_folder = 'text-files'

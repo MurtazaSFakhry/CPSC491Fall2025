@@ -1,3 +1,13 @@
 openai
 python-dotenv
 chromadb
+pinecone>=3.0.0
+streamlit
+langchain
+PyMuPDF
+sentence-transformers
+numpy
+PyPDF2
+tiktoken
+
+
