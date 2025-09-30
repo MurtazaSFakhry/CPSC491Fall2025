@@ -9,11 +9,11 @@ from chromadb.config import Settings
 from config import get_api_key
 
 
-openai.api_key = get_api_key() # fetch api key from env
-client = OpenAI(api_key=openai.api_key)
+openai_client = OpenAI(api_key=get_api_key()) # Initialize OpenAI client with API key
 
 # === Constants ===
-PDF_FOLDER = "pdfs"
+#PDF_FOLDER = "pdfs"
+PDF_FOLDER = r"C:\Users\murta\OneDrive\Desktop\CPSC491Fall2025-1\doc\pdfs"
 EMBEDDING_MODEL = "text-embedding-3-small"  # You can switch to "text-embedding-3-large" if needed
 OUTPUT_JSONL = "fcc_embedding_payloads_rich_sourced.jsonl"
 
@@ -57,7 +57,7 @@ def get_embedding(text):
     Generates an embedding for a given text using the OpenAI client.
     """
     try:
-        response = client.embeddings.create(
+        response = openai_client.embeddings.create(
             model=EMBEDDING_MODEL,
             input=text
         )
@@ -168,3 +168,4 @@ if __name__ == "__main__":
     payloads = process_documents(PDF_FOLDER)
     save_payloads_jsonl(payloads, OUTPUT_JSONL)
     print("✅ Embedding + ChromaDB integration (rich + source-aware) complete.")
+

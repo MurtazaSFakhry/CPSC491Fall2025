@@ -1,10 +1,10 @@
 import json
-import openai
+from openai import OpenAI
 from chromadb import PersistentClient
 from config import get_api_key
 
 # === CONFIG ===
-openai.api_key = get_api_key() # fetch api key from env
+openai_client = OpenAI(api_key=get_api_key()) # Initialize OpenAI client with API key
 embedding_file = "fcc_embedding_payloads_rich_sourced.jsonl"
 persist_path = "./chroma_fcc_storage"
 collection_name = "fcc_documents"
@@ -41,11 +41,11 @@ except Exception as e:
 query = "public warning systems and wireless emergency alerts"
 
 # Embed query using the same model used for stored documents
-response = openai.Embedding.create(
+response = openai_client.embeddings.create(
     model="text-embedding-ada-002",
     input=query
 )
-query_vector = response['data'][0]['embedding']
+query_vector = response.data[0].embedding
 
 # Run the query
 results = collection.query(

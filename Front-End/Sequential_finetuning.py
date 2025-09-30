@@ -3,7 +3,7 @@ import time
 import json
 from openai import OpenAI
 from dotenv import load_dotenv
-from config import get_api_key
+from VectordB.config import get_api_key
 
 # Load environment variables
 load_dotenv()
