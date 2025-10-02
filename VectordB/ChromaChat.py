@@ -42,13 +42,39 @@ while True:
     )
 
 #the.
-    # Step 3: Combine top chunks into context
-    context_chunks = results['documents'][0]
-    full_context = "\n\n".join(context_chunks)
+    # Step 3: Combine top chunks into context with citations
+    context_chunks = results.get('documents', [[]])[0]
+    metadatas = results.get('metadatas', [[]])[0]
 
-    # Step 4: Send to OpenAI Chat
+    formatted_chunks = []
+    for i, (chunk, meta) in enumerate(zip(context_chunks, metadatas)):
+        # Defensive access to metadata keys
+        title = None
+        source = None
+        if isinstance(meta, dict):
+            title = meta.get("title") or meta.get("document_title") or meta.get("name")
+            source = meta.get("source") or meta.get("url") or meta.get("link")
+        # Fallbacks
+        title = title if title and title.strip() else f"Source {i+1}"
+        source = source if source and str(source).strip() else "N/A"
+        # Markdown link only if we have a plausible URL
+        if source.startswith("http://") or source.startswith("https://"):
+            header = f"[{title}]({source})"
+        else:
+            header = f"{title} (no link)"
+        formatted_chunks.append(f"{header}:\n{chunk}")
+
+    full_context = "\n\n".join(formatted_chunks) if formatted_chunks else "No retrieved context available. Answer only if you can based on prior instructions." 
+
+    # Step 4: Build prompt with explicit citation guidance
     prompt = f"""You are an expert assistant for regulatory and emergency communication policy. 
-Using the following source material, answer the user's question in a clear, helpful way.
+Using the following **source material (each item begins with its cited source name and optional link)**, answer the user's question clearly and accurately.
+
+Requirements:
+1. Only use the provided sources for factual claims.
+2. When making a claim, reference the source title in parentheses e.g., (Source 1) or (EAS Guide) that matches the heading.
+3. If the answer cannot be derived from the sources, state that explicitly and offer to refine the query.
+4. Do NOT hallucinate regulations or policies not present in the sources.
 
 ---SOURCE MATERIAL---
 {full_context}
