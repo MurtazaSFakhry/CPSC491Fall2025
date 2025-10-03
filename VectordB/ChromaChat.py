@@ -2,9 +2,6 @@
 import json
 from openai import OpenAI
 from chromadb import PersistentClient
-import sys
-import os
-sys.path.append(os.path.abspath("C:/Users/murta/OneDrive/Desktop/CPSC491Fall2025-1/Config"))
 from config import get_api_key
 
 

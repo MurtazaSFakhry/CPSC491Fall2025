@@ -8,3 +8,9 @@ numpy>=1.26.0
 tqdm>=4.66.0
 pinecone-client>=3.0.0
 streamlit>=1.34.0
+langchain
+PyMuPDF
+sentence-transformers
+numpy
+PyPDF2
+tiktoken
